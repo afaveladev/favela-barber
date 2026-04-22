@@ -2,18 +2,18 @@ import { useState, useEffect } from "react";
 import { FaInstagram, FaFacebookF, FaTimes, FaChevronLeft, FaChevronRight, FaExpand } from "react-icons/fa";
 
 // Importa todas tus imágenes
-import corte1 from "../assets/corte1.jpeg";
-import corte2 from "../assets/corte2.jpeg";
-import corte3 from "../assets/corte3.jpeg";
-import corte4 from "../assets/corte4.jpeg";
-import corte5 from "../assets/corte5.jpeg";
-import corte6 from "../assets/corte6.jpeg";
-import corte7 from "../assets/corte7.jpeg";
-import corte8 from "../assets/corte8.jpeg";
-import corte9 from "../assets/corte9.jpeg";
-import corte10 from "../assets/corte10.jpeg";
-import corte11 from "../assets/corte11.jpeg";
-import corte12 from "../assets/corte12.jpeg";
+import corte1 from "../assets/corte1.webp";
+import corte2 from "../assets/corte2.webp";
+import corte3 from "../assets/corte3.webp";
+import corte4 from "../assets/corte4.webp";
+import corte5 from "../assets/corte5.webp";
+import corte6 from "../assets/corte6.webp";
+import corte7 from "../assets/corte7.webp";
+import corte8 from "../assets/corte8.webp";
+import corte9 from "../assets/corte9.webp";
+import corte10 from "../assets/corte10.webp";
+import corte11 from "../assets/corte11.webp";
+import corte12 from "../assets/corte12.webp";
 
 function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
