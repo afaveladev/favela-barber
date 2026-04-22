@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaRegCalendarAlt, FaBars, FaTimes, FaChevronRight } from "react-icons/fa";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);

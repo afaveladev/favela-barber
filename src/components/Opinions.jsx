@@ -11,7 +11,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 2 días",
     verified: true,
-    img: "/clientes/1.jpg"
+    img: "" //
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 5 días",
     verified: true,
-    img: "/clientes/2.jpg"
+    img: "" //
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 1 semana",
     verified: true,
-    img: "/clientes/3.jpg"
+    img: "" //
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 1 semana",
     verified: true,
-    img: "/clientes/4.jpg"
+    img: "" //
   },
   {
     id: 5,
@@ -51,7 +51,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 2 semanas",
     verified: true,
-    img: "/clientes/5.jpg"
+    img: "" //
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 2 semanas",
     verified: true,
-    img: "/clientes/6.jpg"
+    img: "" //
   },
   {
     id: 7,
@@ -71,7 +71,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 3 semanas",
     verified: true,
-    img: "/clientes/7.jpg"
+    img: "" //
   },
   {
     id: 8,
@@ -81,7 +81,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 3 semanas",
     verified: true,
-    img: "/clientes/8.jpg"
+    img: "" //
   },
   {
     id: 9,
@@ -91,7 +91,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 1 mes",
     verified: true,
-    img: "/clientes/9.jpg"
+    img: "" //
   },
   {
     id: 10,
@@ -101,7 +101,7 @@ const allReviews = [
     rating: 5,
     date: "Hace 1 mes",
     verified: true,
-    img: "/clientes/10.jpg"
+    img: "" //
   }
 ];
 

@@ -1,5 +1,5 @@
 import { FaAward, FaUserTie, FaCut, FaHeart } from "react-icons/fa";
-import barberImg from "../assets/barber2.png";
+import barberImg from "../assets/barber2.webp";
 
 export default function About() {
   return (
