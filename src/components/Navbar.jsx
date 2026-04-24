@@ -71,7 +71,7 @@ function Navbar() {
     if (clickCount.current === 3) {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
-      window.location.href = '/favela-barber/#/admin';      return; // No hacer scroll al inicio
+      window.location.href = window.location.origin + window.location.pathname + '#/admin';
     }
 
     // Si NO son 3 clics, comportamiento normal (ir al inicio)
