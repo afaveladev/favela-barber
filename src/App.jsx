@@ -28,7 +28,7 @@ function App() {
   }, []);
 
   // Panel de Administración
-  if (currentPath === '#/admin') {
+  if (currentPath === '/admin') {
     return <Admin />;
   }
 

@@ -69,7 +69,7 @@ function Navbar() {
       clickCount.current = 0;
       
       // Redirigir al panel admin
-      window.location.hash = '#/admin';
+      window.location.hash = '/admin';
       
       return;
     }
