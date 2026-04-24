@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import Services from "./components/Services"
@@ -11,28 +10,13 @@ import Footer from "./components/Footer"
 import Admin from "./components/Admin"
 
 function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.hash);
+  // Detectar si la URL es /admin
+  const isAdmin = window.location.pathname.includes('/admin');
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentPath(window.location.hash);
-    };
-
-    // Detectar cambios en el hash
-    window.addEventListener('hashchange', handleHashChange);
-    
-    // Verificar al cargar la página
-    handleHashChange();
-
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  // Panel de Administración
-  if (currentPath === '/admin') {
+  if (isAdmin) {
     return <Admin />;
   }
 
-  // Página principal
   return (
     <>
       <Navbar />
