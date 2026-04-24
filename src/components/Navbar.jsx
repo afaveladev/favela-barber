@@ -8,7 +8,7 @@ function Navbar() {
   const [activeSection, setActiveSection] = useState("inicio");
   const [hoveredItem, setHoveredItem] = useState(null);
 
-  // 🆕 Estados para el acceso secreto
+  // Estados para el acceso secreto
   const clickTimer = useRef(null);
   const clickCount = useRef(0);
 
@@ -54,27 +54,27 @@ function Navbar() {
     }
   };
 
-  // 🆕 MANEJAR CLIC SECRETO EN EL LOGO
+  // MANEJAR CLIC SECRETO EN EL LOGO
   const handleLogoClick = () => {
-    // Incrementar contador
     clickCount.current += 1;
 
-    // Si es el primer clic, iniciar timer
     if (clickCount.current === 1) {
       clickTimer.current = setTimeout(() => {
-        // Si pasan 2 segundos sin llegar a 3 clics, reiniciar
         clickCount.current = 0;
       }, 2000);
     }
 
-    // Si llegó a 3 clics en menos de 2 segundos → ABRIR PANEL
     if (clickCount.current === 3) {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
-      window.location.href = window.location.origin + window.location.pathname + '#/admin';
+      
+      // Redirigir al panel admin
+      window.location.hash = '#/admin';
+      
+      return;
     }
 
-    // Si NO son 3 clics, comportamiento normal (ir al inicio)
+    // Comportamiento normal: ir al inicio
     scrollToSection("inicio");
   };
 
@@ -107,7 +107,7 @@ function Navbar() {
           {/* LOGO CON ACCESO SECRETO */}
           <div 
             className="logo-wrapper"
-            onClick={handleLogoClick}  // 🆕 Triple clic para admin
+            onClick={handleLogoClick}
           >
             <img
               src={logo}
