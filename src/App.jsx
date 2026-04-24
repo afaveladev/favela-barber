@@ -7,8 +7,18 @@ import Gallery from "./components/Gallery"
 import Contact from "./components/Contact"
 import CallToAction from "./components/CallToAction"
 import Footer from "./components/Footer"
+import Admin from "./components/Admin"  // 🆕 Agregar esta línea
 
 function App() {
+  // Detectar si la URL es /admin
+  const isAdmin = window.location.pathname.includes('/admin');
+
+  // Si es admin, mostrar solo el panel
+  if (isAdmin) {
+    return <Admin />;
+  }
+
+  // Si no, mostrar la página normal
   return (
     <>
       <Navbar />
@@ -16,7 +26,7 @@ function App() {
       <Services />
       <About />
       <Opinions />
-      <Gallery/>
+      <Gallery />
       <Contact />
       <CallToAction />
       <Footer />
@@ -24,4 +34,4 @@ function App() {
   )
 }
 
-export default App  
+export default App
