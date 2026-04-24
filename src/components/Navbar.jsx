@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { FaRegCalendarAlt, FaBars, FaTimes, FaChevronRight } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import { FaRegCalendarAlt, FaTimes, FaChevronRight } from "react-icons/fa";
 import logo from "../assets/logo.webp";
 
 function Navbar() {
@@ -7,6 +7,10 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
   const [hoveredItem, setHoveredItem] = useState(null);
+
+  // 🆕 Estados para el acceso secreto
+  const clickTimer = useRef(null);
+  const clickCount = useRef(0);
 
   // Detectar scroll para cambiar estilo del navbar
   useEffect(() => {
@@ -50,6 +54,31 @@ function Navbar() {
     }
   };
 
+  // 🆕 MANEJAR CLIC SECRETO EN EL LOGO
+  const handleLogoClick = () => {
+    // Incrementar contador
+    clickCount.current += 1;
+
+    // Si es el primer clic, iniciar timer
+    if (clickCount.current === 1) {
+      clickTimer.current = setTimeout(() => {
+        // Si pasan 2 segundos sin llegar a 3 clics, reiniciar
+        clickCount.current = 0;
+      }, 2000);
+    }
+
+    // Si llegó a 3 clics en menos de 2 segundos → ABRIR PANEL
+    if (clickCount.current === 3) {
+      clearTimeout(clickTimer.current);
+      clickCount.current = 0;
+      window.location.href = '/favela-barber/#/admin';
+      return; // No hacer scroll al inicio
+    }
+
+    // Si NO son 3 clics, comportamiento normal (ir al inicio)
+    scrollToSection("inicio");
+  };
+
   const navItems = [
     { id: "inicio", label: "INICIO" },
     { id: "servicios", label: "SERVICIOS" },
@@ -76,10 +105,10 @@ function Navbar() {
       <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""} ${menuOpen ? "menu-open" : ""}`}>
         <div className="navbar-container">
           
-          {/* LOGO */}
+          {/* LOGO CON ACCESO SECRETO */}
           <div 
             className="logo-wrapper"
-            onClick={() => scrollToSection("inicio")}
+            onClick={handleLogoClick}  // 🆕 Triple clic para admin
           >
             <img
               src={logo}
@@ -184,7 +213,6 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* Espaciador para compensar el navbar fixed */}
       <div className="navbar-spacer"></div>
     </>
   );
