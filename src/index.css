@@ -74,16 +74,17 @@ section {
   scroll-margin-top: 90px;
   position: relative;
   overflow-x: hidden;
-  animation: fadeUp 0.8s ease;
+  animation: fadeUpGlobal 0.8s ease;
 }
 
-/* ✨ ANIMACIONES GLOBALES */
-@keyframes fadeUp {
+/* ✨ ANIMACIONES GLOBALES (UNIFICADAS) */
+@keyframes fadeUpGlobal {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
+  from { opacity: 0; }
   to { opacity: 1; }
 }
 
@@ -100,6 +101,27 @@ section {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes galleryFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scissorsPulse {
+  0%, 100% { opacity: 1; transform: rotate(180deg) scale(1); }
+  50% { opacity: 0.5; transform: rotate(180deg) scale(1.1); }
+}
+
+@keyframes gentleShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
 }
 
 /* 🖼️ CARGA SUAVE DE IMÁGENES */
@@ -567,22 +589,12 @@ textarea:focus-visible {
   height: 75px;
 }
 
-/* ============================================
-   🔥 CORRECCIÓN - OCULTAR X DUPLICADA
-   ============================================ */
-
-/* Cuando el menú está abierto, ocultar el botón hamburguesa */
+/* Corrección X duplicada */
 .menu-open .menu-toggle {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
-
-/* Asegurar que el body no tenga scroll */
-body:has(.menu-open) {
-  overflow: hidden;
-}
-
 
 /* ============================================
    🔥 HERO - MEJORADO
@@ -591,7 +603,7 @@ body:has(.menu-open) {
 .hero {
   min-height: 100vh;
   height: auto;
-  background-image: url('/barber.jpg');
+  background-image: url('/barber.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -619,7 +631,7 @@ body:has(.menu-open) {
   flex-direction: column;
   gap: 18px;
   align-items: center;
-  animation: fadeUp 1s ease;
+  animation: fadeUpGlobal 1s ease;
 }
 
 .hero-rating {
@@ -675,7 +687,7 @@ body:has(.menu-open) {
   transform: rotate(180deg);
   color: var(--gold);
   font-size: 20px;
-  animation: pulse 2s infinite;
+  animation: scissorsPulse 2s infinite;
 }
 
 .hero-description {
@@ -911,29 +923,6 @@ body:has(.menu-open) {
 }
 
 /* ============================================
-   🎬 ANIMACIONES SCROLL - SERVICES
-   ============================================ */
-
-/* Stagger delays para las cards */
-.service-card.stagger-delay-1 { transition-delay: 0.1s !important; }
-.service-card.stagger-delay-2 { transition-delay: 0.2s !important; }
-.service-card.stagger-delay-3 { transition-delay: 0.3s !important; }
-.service-card.stagger-delay-4 { transition-delay: 0.4s !important; }
-.service-card.stagger-delay-5 { transition-delay: 0.5s !important; }
-.service-card.stagger-delay-6 { transition-delay: 0.6s !important; }
-
-/* Asegurar que las cards empiecen ocultas */
-.service-card.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.service-card.animate-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* ============================================
    🔥 ABOUT - MEJORADO
    ============================================ */
 
@@ -1071,45 +1060,6 @@ body:has(.menu-open) {
 .feature:hover svg {
   transform: scale(1.2);
   color: var(--gold-dark);
-}
-
-/* ============================================
-   🎬 ANIMACIONES SCROLL - ABOUT
-   ============================================ */
-
-/* Stagger delays para features */
-.feature.stagger-delay-1 { transition-delay: 0.1s !important; }
-.feature.stagger-delay-2 { transition-delay: 0.2s !important; }
-.feature.stagger-delay-3 { transition-delay: 0.3s !important; }
-.feature.stagger-delay-4 { transition-delay: 0.4s !important; }
-
-/* Asegurar que las features empiecen ocultas */
-.feature.animate-on-scroll {
-  opacity: 0;
-}
-
-.feature.animate-fade-left {
-  transform: translateX(-30px);
-}
-
-.feature.animate-fade-right {
-  transform: translateX(30px);
-}
-
-.feature.animate-visible {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
-}
-
-/* Imagen zoom */
-.about-image.animate-on-scroll {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.about-image.animate-visible {
-  opacity: 1 !important;
-  transform: scale(1) !important;
 }
 
 /* ============================================
@@ -1443,13 +1393,8 @@ body:has(.menu-open) {
   z-index: 10;
 }
 
-.nav-arrow-left {
-  left: -70px;
-}
-
-.nav-arrow-right {
-  right: -70px;
-}
+.nav-arrow-left { left: -70px; }
+.nav-arrow-right { right: -70px; }
 
 .nav-arrow:hover {
   background: #F59E0B;
@@ -1536,21 +1481,8 @@ body:has(.menu-open) {
   background: #d97706;
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Stagger delays para testimonios */
-.opinion-card.stagger-delay-1 { transition-delay: 0.1s !important; }
-.opinion-card.stagger-delay-2 { transition-delay: 0.2s !important; }
-.opinion-card.stagger-delay-3 { transition-delay: 0.3s !important; }
-.opinion-card.stagger-delay-4 { transition-delay: 0.4s !important; }
-.opinion-card.stagger-delay-5 { transition-delay: 0.5s !important; }
-.opinion-card.stagger-delay-6 { transition-delay: 0.6s !important; }
-
 /* ============================================
-   🔥 GALLERY - GRID CORREGIDO
+   🔥 GALLERY - COMPLETO Y CORREGIDO
    ============================================ */
 
 .gallery {
@@ -1644,6 +1576,8 @@ body:has(.menu-open) {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: #0d0d0d;
+  opacity: 0;
+  animation: galleryFadeUp 0.6s ease forwards;
 }
 
 .gallery-card:hover {
@@ -1757,13 +1691,23 @@ body:has(.menu-open) {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 15px;
   margin-bottom: 40px;
+}
+
+.footer-divider::before,
+.footer-divider::after {
+  content: "";
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F59E0B, transparent);
 }
 
 .scissors-icon {
   font-size: 24px;
   color: #F59E0B;
-  animation: pulse 2s infinite; 
+  transform: rotate(180deg);
+  animation: scissorsPulse 2s infinite;
 }
 
 .gallery-cta {
@@ -1943,13 +1887,8 @@ body:has(.menu-open) {
   z-index: 10000;
 }
 
-.lightbox-prev {
-  left: 30px;
-}
-
-.lightbox-next {
-  right: 30px;
-}
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
 
 .lightbox-nav:hover {
   background: #F59E0B;
@@ -1957,10 +1896,19 @@ body:has(.menu-open) {
   transform: translateY(-50%) scale(1.1);
 }
 
-/* Stagger delays para imágenes */
-.gallery-card.stagger-delay-1 { transition-delay: 0.1s !important; }
-.gallery-card.stagger-delay-2 { transition-delay: 0.2s !important; }
-/* ... hasta 12 */
+/* Stagger delays Gallery */
+.gallery-card.stagger-delay-1  { animation-delay: 0.05s !important; }
+.gallery-card.stagger-delay-2  { animation-delay: 0.10s !important; }
+.gallery-card.stagger-delay-3  { animation-delay: 0.15s !important; }
+.gallery-card.stagger-delay-4  { animation-delay: 0.20s !important; }
+.gallery-card.stagger-delay-5  { animation-delay: 0.25s !important; }
+.gallery-card.stagger-delay-6  { animation-delay: 0.30s !important; }
+.gallery-card.stagger-delay-7  { animation-delay: 0.35s !important; }
+.gallery-card.stagger-delay-8  { animation-delay: 0.40s !important; }
+.gallery-card.stagger-delay-9  { animation-delay: 0.45s !important; }
+.gallery-card.stagger-delay-10 { animation-delay: 0.50s !important; }
+.gallery-card.stagger-delay-11 { animation-delay: 0.55s !important; }
+.gallery-card.stagger-delay-12 { animation-delay: 0.60s !important; }
 
 /* ============================================
    🔥 CONTACT - VERSIÓN COMPLETA Y MEJORADA
@@ -2007,7 +1955,6 @@ body:has(.menu-open) {
   gap: 30px;
 }
 
-/* ===== CALENDARIO ===== */
 .calendar {
   background: var(--bg-card);
   padding: 30px;
@@ -2130,7 +2077,6 @@ body:has(.menu-open) {
   font-weight: 600;
 }
 
-/* Tooltips en días */
 .day.busy:hover::after {
   content: "Día lleno";
   position: absolute;
@@ -2167,19 +2113,11 @@ body:has(.menu-open) {
   pointer-events: none;
 }
 
-/* Efecto shake al hacer clic en día no disponible */
-@keyframes gentleShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  75% { transform: translateX(3px); }
-}
-
 .day.past:active,
 .day.busy:active {
   animation: gentleShake 0.3s ease;
 }
 
-/* Leyenda */
 .calendar-info {
   margin-top: 20px;
   font-size: 12px;
@@ -2209,13 +2147,12 @@ body:has(.menu-open) {
   background: #444;
 }
 
-/* ===== HORARIOS ===== */
 .horarios {
   background: var(--bg-card);
   padding: 25px;
   border-radius: 25px;
   border: 1px solid var(--border-light);
-  animation: fadeUp 0.4s ease;
+  animation: fadeUpGlobal 0.4s ease;
 }
 
 .horarios h4 {
@@ -2272,7 +2209,6 @@ body:has(.menu-open) {
   opacity: 0.5;
 }
 
-/* ===== MAPA ===== */
 .map {
   border-radius: 25px;
   overflow: hidden;
@@ -2284,7 +2220,6 @@ body:has(.menu-open) {
   display: block;
 }
 
-/* ===== FORMULARIO ===== */
 .contact-form {
   background: var(--bg-card);
   padding: 35px;
@@ -2375,98 +2310,6 @@ body:has(.menu-open) {
   padding: 16px;
   font-size: 15px;
   width: 100%;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .contact-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .contact {
-    padding: 80px 20px;
-  }
-  
-  .contact-title {
-    font-size: 40px;
-  }
-  
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .calendar-grid {
-    gap: 6px;
-  }
-  
-  .day {
-    padding: 10px 4px;
-    font-size: 12px;
-  }
-  
-  .day small.disponibles {
-    font-size: 9px;
-  }
-  
-  .horarios-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .calendar-header span {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-title {
-    font-size: 32px;
-  }
-  
-  .calendar {
-    padding: 20px 15px;
-  }
-  
-  .day {
-    padding: 8px 2px;
-    font-size: 11px;
-  }
-  
-  .day small.disponibles {
-    font-size: 8px;
-  }
-  
-  .contact-form {
-    padding: 25px 20px;
-  }
-  
-  .form-title {
-    font-size: 26px;
-  }
-  
-  .hora-btn {
-    padding: 12px 8px;
-    font-size: 13px;
-  }
-  
-  .calendar-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-}
-
-/* ===== ANIMACIONES ===== */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* ============================================
@@ -2713,6 +2556,53 @@ body:has(.menu-open) {
 }
 
 /* ============================================
+   🎬 ANIMACIONES SCROLL - CLASES BASE
+   ============================================ */
+
+.animate-on-scroll {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-up {
+  transform: translateY(30px);
+}
+
+.animate-fade-left {
+  transform: translateX(-30px);
+}
+
+.animate-fade-right {
+  transform: translateX(30px);
+}
+
+.animate-zoom-in {
+  transform: scale(0.9);
+}
+
+.animate-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transform: translateX(0) !important;
+  transform: scale(1) !important;
+}
+
+/* Stagger delays para Services */
+.service-card.stagger-delay-1 { transition-delay: 0.1s !important; }
+.service-card.stagger-delay-2 { transition-delay: 0.2s !important; }
+.service-card.stagger-delay-3 { transition-delay: 0.3s !important; }
+.service-card.stagger-delay-4 { transition-delay: 0.4s !important; }
+.service-card.stagger-delay-5 { transition-delay: 0.5s !important; }
+.service-card.stagger-delay-6 { transition-delay: 0.6s !important; }
+
+/* Stagger delays para About */
+.feature.stagger-delay-1 { transition-delay: 0.3s !important; }
+.feature.stagger-delay-2 { transition-delay: 0.4s !important; }
+.feature.stagger-delay-3 { transition-delay: 0.5s !important; }
+.feature.stagger-delay-4 { transition-delay: 0.6s !important; }
+
+/* ============================================
    📱 RESPONSIVE DESIGN - COMPLETO Y CORREGIDO
    ============================================ */
 
@@ -2912,7 +2802,7 @@ body:has(.menu-open) {
   section { scroll-margin-top: 60px; }
 }
 
-/* Preferencias de movimiento reducido */
+/* Preferencias de movimiento reducido (Accesibilidad) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -2920,40 +2810,4 @@ body:has(.menu-open) {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* ============================================
-   🎬 ANIMACIONES SCROLL - CLASES BASE
-   ============================================ */
-
-/* Estado inicial - Oculto */
-.animate-on-scroll {
-  opacity: 0;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
-              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Variantes de animación */
-.animate-fade-up {
-  transform: translateY(30px);
-}
-
-.animate-fade-left {
-  transform: translateX(-30px);
-}
-
-.animate-fade-right {
-  transform: translateX(30px);
-}
-
-.animate-zoom-in {
-  transform: scale(0.9);
-}
-
-/* Estado visible */
-.animate-visible {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transform: translateX(0) !important;
-  transform: scale(1) !important;
 }

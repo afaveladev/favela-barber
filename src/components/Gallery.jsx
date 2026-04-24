@@ -20,7 +20,6 @@ function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [columns, setColumns] = useState(4);
 
-  // Detectar columnas según tamaño de pantalla
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) setColumns(1);
@@ -28,13 +27,11 @@ function Gallery() {
       else if (window.innerWidth <= 1024) setColumns(3);
       else setColumns(4);
     };
-    
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Array completo de imágenes (agrega todas las que quieras)
   const images = [
     { src: corte1, label: "Fade Clásico", category: "Corte", featured: true },
     { src: corte2, label: "Nuestro Local", category: "Barbería", featured: false },
@@ -50,7 +47,6 @@ function Gallery() {
     { src: corte12, label: "Experiencia Favela", category: "Experiencia", featured: true },
   ];
 
-  // Organizar imágenes en columnas para masonry
   const getColumns = () => {
     const cols = Array.from({ length: columns }, () => []);
     images.forEach((img, index) => {
@@ -59,19 +55,14 @@ function Gallery() {
     return cols;
   };
 
-  // Abrir lightbox
-  const openLightbox = (imageData, index) => {
+  const openLightbox = (imageData) => {
     const globalIndex = images.findIndex(img => img.src === imageData.src);
     setCurrentIndex(globalIndex);
     setSelectedImage(imageData);
   };
 
-  // Cerrar lightbox
-  const closeLightbox = () => {
-    setSelectedImage(null);
-  };
+  const closeLightbox = () => setSelectedImage(null);
 
-  // Navegar entre imágenes
   const nextImage = () => {
     const newIndex = (currentIndex + 1) % images.length;
     setCurrentIndex(newIndex);
@@ -84,7 +75,6 @@ function Gallery() {
     setSelectedImage(images[newIndex]);
   };
 
-  // Manejar teclas
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!selectedImage) return;
@@ -92,7 +82,6 @@ function Gallery() {
       if (e.key === "ArrowRight") nextImage();
       if (e.key === "ArrowLeft") prevImage();
     };
-    
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedImage, currentIndex]);
@@ -103,7 +92,6 @@ function Gallery() {
         <div className="gallery-bg-pattern"></div>
 
         <div className="gallery-container">
-          {/* Header */}
           <div className="gallery-header">
             <span className="gallery-subtitle">
               <span className="subtitle-line"></span>
@@ -121,18 +109,19 @@ function Gallery() {
             </p>
           </div>
 
-          {/* Grid Masonry por columnas - SIEMPRE SE VE BIEN */}
           <div className="gallery-masonry-container">
             <div className={`gallery-masonry columns-${columns}`}>
               {getColumns().map((column, colIndex) => (
                 <div className="masonry-column" key={colIndex}>
-                  {column.map((img, imgIndex) => {
+                  {column.map((img) => {
                     const globalIndex = images.findIndex(i => i.src === img.src);
+                    const delayClass = `stagger-delay-${(globalIndex % 12) + 1}`;
+                    
                     return (
                       <div 
-                        className={`gallery-card ${img.featured ? 'featured' : ''}`}
+                        className={`gallery-card ${img.featured ? 'featured' : ''} ${delayClass}`}
                         key={globalIndex}
-                        onClick={() => openLightbox(img, globalIndex)}
+                        onClick={() => openLightbox(img)}
                       >
                         <div className="gallery-card-inner">
                           <img src={img.src} alt={img.label} loading="lazy" />
@@ -154,7 +143,6 @@ function Gallery() {
             </div>
           </div>
 
-          {/* Footer */}
           <div className="gallery-footer">
             <div className="footer-divider">
               <span className="scissors-icon">✂️</span>
@@ -165,59 +153,29 @@ function Gallery() {
             </p>
 
             <div className="gallery-socials">
-              <a 
-                href="https://instagram.com/favelabarber" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-btn instagram"
-              >
-                <FaInstagram />
-                <span>Instagram</span>
+              <a href="https://instagram.com/favelabarber" target="_blank" rel="noopener noreferrer" className="social-btn instagram">
+                <FaInstagram /><span>Instagram</span>
               </a>
-              
-              <a 
-                href="https://facebook.com/favelabarber" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="social-btn facebook"
-              >
-                <FaFacebookF />
-                <span>Facebook</span>
+              <a href="https://facebook.com/favelabarber" target="_blank" rel="noopener noreferrer" className="social-btn facebook">
+                <FaFacebookF /><span>Facebook</span>
               </a>
             </div>
 
-            {/* Estadísticas */}
             <div className="gallery-stats">
-              <div className="stat-item">
-                <span className="stat-number">{images.length}+</span>
-                <span className="stat-label">Estilos</span>
-              </div>
+              <div className="stat-item"><span className="stat-number">{images.length}+</span><span className="stat-label">Estilos</span></div>
               <div className="stat-divider"></div>
-              <div className="stat-item">
-                <span className="stat-number">100%</span>
-                <span className="stat-label">Profesional</span>
-              </div>
+              <div className="stat-item"><span className="stat-number">100%</span><span className="stat-label">Profesional</span></div>
               <div className="stat-divider"></div>
-              <div className="stat-item">
-                <span className="stat-number">4.9★</span>
-                <span className="stat-label">Rating</span>
-              </div>
+              <div className="stat-item"><span className="stat-number">4.9★</span><span className="stat-label">Rating</span></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Lightbox Modal */}
       {selectedImage && (
         <div className="lightbox-modal" onClick={closeLightbox}>
-          <button className="lightbox-close" onClick={closeLightbox}>
-            <FaTimes />
-          </button>
-          
-          <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); prevImage(); }}>
-            <FaChevronLeft />
-          </button>
-          
+          <button className="lightbox-close" onClick={closeLightbox}><FaTimes /></button>
+          <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); prevImage(); }}><FaChevronLeft /></button>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage.src} alt={selectedImage.label} />
             <div className="lightbox-info">
@@ -226,10 +184,7 @@ function Gallery() {
               <p className="image-counter">{currentIndex + 1} / {images.length}</p>
             </div>
           </div>
-          
-          <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); nextImage(); }}>
-            <FaChevronRight />
-          </button>
+          <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); nextImage(); }}><FaChevronRight /></button>
         </div>
       )}
     </>
