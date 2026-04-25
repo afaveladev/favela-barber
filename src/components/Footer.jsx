@@ -43,7 +43,7 @@ function Footer() {
 
           <div className="footer-contact">
             <p><FaMapMarkerAlt /> Isidro Leal Rodríguez 3402, Los Álamos, Gómez Palacio</p>
-            <p><FaPhoneAlt /> 871 450 6477</p>
+            <p><FaPhoneAlt /> 871 535 3066</p>
             <p><FaClock /> Desde las 11:00 a.m.</p>
           </div>
         </div>
@@ -61,7 +61,7 @@ function Footer() {
 
       {/* 🔥 BOTÓN WHATS FLOAT */}
       <a
-        href="https://wa.me/528714506477"
+        href="https://wa.me/8715353066"
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-float"

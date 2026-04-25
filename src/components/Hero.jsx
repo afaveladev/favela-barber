@@ -149,7 +149,7 @@ function Hero() {
           </button>
 
           <a
-            href="https://wa.me/528716003627?text=Hola,%20quiero%20agendar%20una%20cita%20en%20FAVELA%20BARBER"
+            href="https://wa.me/8715353066?text=Hola,%20quiero%20agendar%20una%20cita%20en%20FAVELA%20BARBER"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary"

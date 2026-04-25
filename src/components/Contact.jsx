@@ -383,12 +383,13 @@ function Contact() {
           {/* 🗺️ MAPA */}
           <div className="map">
             <iframe
-              src="https://www.google.com/maps?q=Gomez+Palacio+Durango&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3599.7848096201274!2d-103.51697530784833!3d25.595661080538875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDM1JzQ0LjciTiAxMDPCsDMxJzAwLjMiVw!5e0!3m2!1ses!2smx!4v1777146201658!5m2!1ses!2smx"
               width="100%"
               height="220"
               style={{ border: 0, borderRadius: "15px" }}
+              allowFullScreen
               loading="lazy"
-              title="Ubicación Favela Barber"
+              title="Favela Barber - Calle Tolosa, Santa Sofía, Gómez Palacio"
             ></iframe>
           </div>
 
