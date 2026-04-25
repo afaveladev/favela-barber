@@ -10,7 +10,13 @@ function Footer() {
 
         {/* 🔥 LOGO + DESCRIPCIÓN */}
         <div className="footer-brand">
-          <img src={logo} alt="logo" className="footer-logo" />
+          <img 
+            src={logo} 
+            alt="Favela Barber" 
+            className="footer-logo" 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            style={{ cursor: 'pointer' }}
+          />
 
           <p>
             Barbería premium en Gómez Palacio, Durango. <br />
@@ -42,7 +48,7 @@ function Footer() {
           <h4>CONTACTO</h4>
 
           <div className="footer-contact">
-            <p><FaMapMarkerAlt /> Isidro Leal Rodríguez 3402, Los Álamos, Gómez Palacio</p>
+            <p><FaMapMarkerAlt /> Calle Tolosa 320, Santa Sofía, Gómez Palacio</p>
             <p><FaPhoneAlt /> 871 535 3066</p>
             <p><FaClock /> Desde las 11:00 a.m.</p>
           </div>
