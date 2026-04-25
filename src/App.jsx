@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import Services from "./components/Services"
@@ -10,13 +11,23 @@ import Footer from "./components/Footer"
 import Admin from "./components/Admin"
 
 function App() {
-  // Detectar si es localhost o GitHub Pages
-  const isLocalhost = window.location.hostname === 'localhost';
-  
-  // Panel admin: en localhost usa /admin, en GitHub Pages usa #/admin
-  const isAdmin = isLocalhost 
-    ? window.location.pathname.includes('/admin')
-    : window.location.hash === '#/admin';
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Función para verificar si estamos en el panel admin
+    const checkAdmin = () => {
+      const hash = window.location.hash;
+      setIsAdmin(hash === '#/admin');
+    };
+
+    // Verificar al cargar
+    checkAdmin();
+
+    // Escuchar cambios en el hash
+    window.addEventListener('hashchange', checkAdmin);
+    
+    return () => window.removeEventListener('hashchange', checkAdmin);
+  }, []);
 
   if (isAdmin) {
     return <Admin />;
