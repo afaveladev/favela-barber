@@ -52,7 +52,7 @@ function Footer() {
 
       {/* 🔻 BOTTOM */}
       <div className="footer-bottom">
-        <p>© 2026 FAVEL'A BARBER. Todos los derechos reservados.</p>
+        <p>© 2026 FAVELA'S BARBER. Todos los derechos reservados.</p>
 
         <div className="footer-rating">
           ⭐⭐⭐⭐⭐ <span>4.9 / 5 • 69 opiniones</span>
