@@ -10,11 +10,8 @@ import Footer from "./components/Footer"
 import Admin from "./components/Admin"
 
 function App() {
-  // Detectar si estamos en el panel admin
-  const isLocalhost = window.location.hostname === 'localhost';
-  const isAdmin = isLocalhost 
-    ? window.location.pathname.includes('/admin')
-    : window.location.hash === '#/admin';
+  // Detectar si estamos en el panel admin (GitHub Pages usa hash)
+  const isAdmin = window.location.hash === '#/admin';
 
   if (isAdmin) {
     return <Admin />;

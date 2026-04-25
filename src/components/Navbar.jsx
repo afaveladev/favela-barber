@@ -47,7 +47,7 @@ function Navbar() {
     }
   };
 
-  // 🆕 MANEJAR CLIC SECRETO EN EL LOGO (FUNCIONA EN LOCALHOST)
+  // 🆕 MANEJAR CLIC SECRETO EN EL LOGO
   const handleLogoClick = () => {
     clickCount.current += 1;
 
@@ -61,8 +61,8 @@ function Navbar() {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
       
-      // Redirigir al panel admin
-      window.location.href = '/favela-barber/admin';
+      // Redirigir al panel admin (funciona en localhost y GitHub Pages)
+      window.location.href = '/favela-barber/#/admin';
       
       return;
     }
