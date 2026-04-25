@@ -2339,9 +2339,11 @@ textarea:focus-visible {
   }
 
   .footer-links li {
-    width: 160px !important;
+    width: 99px !important;
     text-align: left !important;
     margin-bottom: 10px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .footer-links li::before {
@@ -2356,7 +2358,6 @@ textarea:focus-visible {
 
   .footer-links a {
     display: inline-block !important;
-    text-align: left !important;
   }
 
   .footer-socials {
