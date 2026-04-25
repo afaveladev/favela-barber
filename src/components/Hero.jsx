@@ -17,7 +17,7 @@ function Hero() {
 
         {/* 🔥 Título */}
         <h1 className="hero-title">
-          FAVEL'As <br />
+          FAVELA'S <br />
           <span>BARBER</span>
         </h1>
 

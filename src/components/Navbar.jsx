@@ -47,6 +47,7 @@ function Navbar() {
     }
   };
 
+  // 🆕 MANEJAR CLIC SECRETO EN EL LOGO (FUNCIONA EN LOCALHOST)
   const handleLogoClick = () => {
     clickCount.current += 1;
 
@@ -59,7 +60,10 @@ function Navbar() {
     if (clickCount.current === 3) {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
+      
+      // Redirigir al panel admin
       window.location.href = '/favela-barber/admin';
+      
       return;
     }
 
