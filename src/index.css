@@ -2330,14 +2330,18 @@ textarea:focus-visible {
   }
 
   .footer-links {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
     text-align: center !important;
+    list-style: none !important;
+    padding: 0 !important;
   }
 
   .footer-links li {
-    margin-bottom: 0 !important;
-    margin-bottom: 12px !important;
-    text-align: center !important;
+    width: 160px !important;
+    text-align: left !important;
+    margin-bottom: 10px !important;
   }
 
   .footer-links li::before {
@@ -2348,7 +2352,11 @@ textarea:focus-visible {
     color: #F59E0B !important;
     margin-right: 10px !important;
     font-size: 12px !important;
-    position: static !important;
+  }
+
+  .footer-links a {
+    display: inline-block !important;
+    text-align: left !important;
   }
 
   .footer-socials {
