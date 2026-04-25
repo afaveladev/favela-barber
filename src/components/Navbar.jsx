@@ -61,8 +61,14 @@ function Navbar() {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
       
-      // Redirigir al panel admin (funciona en localhost y GitHub Pages)
-      window.location.href = '/favela-barber/#/admin';
+      // Detectar si es localhost o GitHub Pages
+      const isLocalhost = window.location.hostname === 'localhost';
+      
+      if (isLocalhost) {
+        window.location.href = '/favela-barber/admin';
+      } else {
+        window.location.href = '/favela-barber/#/admin';
+      }
       
       return;
     }
