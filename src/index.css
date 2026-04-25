@@ -193,8 +193,9 @@ textarea:focus-visible {
 
 .logo-img {
   width: 55px;
-  height: auto;
-  object-fit: contain;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 50%;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4));
   position: relative;
@@ -203,6 +204,7 @@ textarea:focus-visible {
 
 .navbar-scrolled .logo-img {
   width: 48px;
+  height: 48px;
 }
 
 .logo-wrapper:hover .logo-img {
@@ -410,7 +412,9 @@ textarea:focus-visible {
 
 .mobile-logo {
   width: 50px;
-  height: auto;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
   filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
 }
 
@@ -2166,10 +2170,22 @@ textarea:focus-visible {
   padding: 0 20px;
 }
 
+/* Logo en footer */
 .footer-logo {
   width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
   margin-bottom: 20px;
   filter: drop-shadow(0 0 15px var(--gold-glow));
+}
+
+.mobile-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
 }
 
 .footer-brand p {
@@ -2300,6 +2316,47 @@ textarea:focus-visible {
 .whatsapp-float:hover {
   transform: scale(1.15) rotate(10deg);
   box-shadow: 0 0 30px rgba(37, 211, 102, 0.6);
+}
+
+/* ============================================
+   🔧 CORRECCIÓN FOOTER MÓVIL
+   ============================================ */
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 30px !important;
+  }
+
+  .footer-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+
+  .footer-links li {
+    margin-bottom: 0 !important;
+  }
+
+  .footer-links li::before {
+    display: none !important;
+  }
+
+  .footer-socials {
+    justify-content: center !important;
+  }
+
+  .footer-contact p {
+    justify-content: center !important;
+  }
+
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 10px !important;
+    text-align: center !important;
+  }
 }
 
 /* ============================================
@@ -2896,5 +2953,18 @@ textarea:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Logo responsive */
+@media (max-width: 900px) {
+  .logo-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .navbar-scrolled .logo-img {
+    width: 42px !important;
+    height: 42px !important;
   }
 }
