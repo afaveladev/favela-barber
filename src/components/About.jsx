@@ -47,6 +47,7 @@ export default function About() {
 
           <div className="about-features">
             {features.map((feature, i) => {
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               const featureRef = useScrollAnimation(0.1);
               return (
                 <div

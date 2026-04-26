@@ -21,8 +21,13 @@ function Services() {
     { icon: <FaStar />, title: "Tratamiento Capilar", desc: "Hidratación y cuidado profundo del cabello. Productos de alta gama para un cabello saludable.", price: "Desde $100", highlight: true }
   ];
 
+  // 🆕 Función para seleccionar servicio e ir al formulario
+  const handleServiceClick = (serviceTitle) => {
+    localStorage.setItem("servicioSeleccionado", serviceTitle);
+    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   useEffect(() => {
-    // Animación de entrada para títulos
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -46,22 +51,9 @@ function Services() {
       "-=0.2"
     );
 
-    // Animación stagger para las cards
     gsap.fromTo(cardsRef.current,
-      { 
-        opacity: 0, 
-        y: 60,
-        rotationX: -15,
-        scale: 0.9
-      },
-      { 
-        opacity: 1, 
-        y: 0,
-        rotationX: 0,
-        scale: 1,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "back.out(1.5)",
+      { opacity: 0, y: 60, rotationX: -15, scale: 0.9 },
+      { opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 0.8, stagger: 0.12, ease: "back.out(1.5)",
         scrollTrigger: {
           trigger: ".services-grid",
           start: "top 75%",
@@ -70,42 +62,22 @@ function Services() {
       }
     );
 
-    // Efecto 3D en hover para cada card
     cardsRef.current.forEach((card) => {
       if (!card) return;
       
-      card.addEventListener("mouseenter", (e) => {
-        gsap.to(card, {
-          rotationY: 5,
-          rotationX: -5,
-          scale: 1.03,
-          duration: 0.4,
-          ease: "power2.out"
-        });
+      card.addEventListener("mouseenter", () => {
+        gsap.to(card, { rotationY: 5, rotationX: -5, scale: 1.03, duration: 0.4, ease: "power2.out" });
       });
       
       card.addEventListener("mouseleave", () => {
-        gsap.to(card, {
-          rotationY: 0,
-          rotationX: 0,
-          scale: 1,
-          duration: 0.4,
-          ease: "power2.out"
-        });
+        gsap.to(card, { rotationY: 0, rotationX: 0, scale: 1, duration: 0.4, ease: "power2.out" });
       });
 
-      // Efecto de movimiento con el mouse
       card.addEventListener("mousemove", (e) => {
         const rect = card.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-        
-        gsap.to(card, {
-          rotationY: x * 8,
-          rotationX: -y * 8,
-          duration: 0.3,
-          ease: "power1.out"
-        });
+        gsap.to(card, { rotationY: x * 8, rotationX: -y * 8, duration: 0.3, ease: "power1.out" });
       });
     });
 
@@ -129,7 +101,8 @@ function Services() {
             key={index}
             ref={(el) => (cardsRef.current[index] = el)}
             className={`service-card ${service.highlight ? "highlight" : ""}`}
-            style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+            style={{ perspective: "1000px", transformStyle: "preserve-3d", cursor: "pointer" }}
+            onClick={() => handleServiceClick(service.title)}
           >
             {service.badge && <span className="badge">{service.badge}</span>}
             <div className="service-icon">{service.icon}</div>

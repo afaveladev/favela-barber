@@ -24,7 +24,12 @@ function Footer() {
           </p>
 
           <div className="footer-socials">
-            <a href="#"><FaWhatsapp /></a>
+            <a href="https://wa.me/8715353066"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaWhatsapp />
+          </a>
             <a href="#"><FaInstagram /></a>
             <a href="#"><FaFacebookF /></a>
           </div>

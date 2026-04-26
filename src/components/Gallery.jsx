@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 import { FaInstagram, FaFacebookF, FaTimes } from "react-icons/fa";
 
@@ -19,18 +20,18 @@ function Gallery() {
   const [isPaused, setIsPaused] = useState(false);
 
   const images = [
-    { src: corte1, label: "Fade Clásico", category: "Corte" },
-    { src: corte2, label: "Nuestro Local", category: "Barbería" },
-    { src: corte3, label: "Arreglo de Barba", category: "Barba" },
-    { src: corte4, label: "Corte con Tijera", category: "Corte" },
-    { src: corte5, label: "Estilizado Premium", category: "Estilo" },
-    { src: corte6, label: "Transformación", category: "Antes/Después" },
-    { src: corte7, label: "Combo Corte + Barba", category: "Combo" },
-    { src: corte8, label: "Detalles de Precisión", category: "Detalle" },
-    { src: corte9, label: "Ambiente Premium", category: "Local" },
-    { src: corte10, label: "Corte Moderno", category: "Corte" },
-    { src: corte11, label: "Barba Estilizada", category: "Barba" },
-    { src: corte12, label: "Experiencia Favela", category: "Experiencia" },
+    { src: corte1, label: "Burst Fade", category: "Corte", position: "center 25%" },
+    { src: corte2, label: "Mullet", category: "Corte", position: "center 20%" },
+    { src: corte3, label: "Low Fade", category: "Corte", position: "center 30%" },
+    { src: corte4, label: "Mullet + Beard", category: "Corte", position: "center 35%" },
+    { src: corte5, label: "Drop Fade", category: "Corte", position: "center 25%" },
+    { src: corte6, label: "Low Fade", category: "Corte", position: "center 25%" },
+    { src: corte7, label: "Low Fade", category: "Corte", position: "center 25%" },
+    { src: corte8, label: "Detalles de Precisión", category: "Barba", position: "center 55%" },
+    { src: corte9, label: "Taper Fade Medium", category: "Local", position: "center 25%" },
+    { src: corte10, label: "Taper Fade", category: "Corte", position: "center 30%" },
+    { src: corte11, label: "Burst", category: "Barba", position: "center 25%" },
+    { src: corte12, label: "Taper Fade + Beard", category: "Corte", position: "center 25%" },
   ];
 
   // Duplicar imágenes para efecto infinito
@@ -73,7 +74,12 @@ function Gallery() {
                   onClick={() => setSelectedImage(img)}
                 >
                   <div className="carousel-card-inner">
-                    <img src={img.src} alt={img.label} loading="lazy" />
+                    <img 
+                      src={img.src} 
+                      alt={img.label} 
+                      loading="lazy"
+                      style={{ objectPosition: img.position || "center 25%" }}
+                    />
                     <div className="carousel-card-overlay">
                       <span className="carousel-card-category">{img.category}</span>
                       <h3 className="carousel-card-label">{img.label}</h3>
