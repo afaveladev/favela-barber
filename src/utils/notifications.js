@@ -55,13 +55,13 @@ export const scheduleReminder = (cita) => {
 const sendEmailReminder = async (cita) => {
   if (!cita.email) return;
   
-  const templateParams = {
-    to_email: cita.email,
-    nombre: cita.nombre,
-    servicio: cita.servicio,
-    fecha: formatFecha(cita.fecha),
-    hora: cita.hora
-  };
+    const templateParams = {
+        to_email: cita.email,
+        nombre: cita.nombre,
+        servicio: cita.servicio,
+        fecha: formatFecha(cita.fecha),
+        hora: cita.hora
+    };
   
   try {
     const response = await emailjs.send(
