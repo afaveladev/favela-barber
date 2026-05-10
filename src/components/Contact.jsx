@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { ref, push, onValue } from "firebase/database";
+import { sendWhatsAppToBarber, scheduleReminder } from "../utils/notifications";
 
 function Contact() {
 
@@ -113,6 +114,10 @@ function Contact() {
   const espaciosDisponibles = (fecha) => MAX_CITAS_DIA - countCitasPorDia(fecha);
 
   const handleDayClick = (day) => {
+    if (!form.servicio) {
+      alert("📋 Primero selecciona un servicio en el formulario.");
+      return;
+    }
     const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     if (isPastDay(day)) return;
     if (countCitasPorDia(fecha) >= MAX_CITAS_DIA) { alert("Este día ya está lleno"); return; }
@@ -129,7 +134,9 @@ function Contact() {
   const validatePhone = (phone) => phone.replace(/\D/g, '').length === 10;
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  
+    // Validaciones
     if (!form.nombre || !form.telefono || !form.servicio || !form.fecha || !form.hora) {
       alert("Completa todos los campos obligatorios"); return;
     }
@@ -147,6 +154,7 @@ function Contact() {
     }
 
     try {
+      // Guardar en Firebase
       await push(ref(db, "citas"), {
         nombre: form.nombre,
         telefono: form.telefono,
@@ -157,10 +165,22 @@ function Contact() {
         mensaje: form.mensaje || "",
         createdAt: Date.now()
       });
+
+      // 🆕 Enviar WhatsApp al barbero
+      sendWhatsAppToBarber(form);
+      
+      // 🆕 Programar recordatorio por email para el cliente
+      if (form.email) {
+        scheduleReminder(form);
+      }
+
       alert("✅ Cita agendada correctamente. ¡Te esperamos en Favela Barber!");
+      
+      // Limpiar formulario
       setForm({ nombre: "", telefono: "", email: "", servicio: "", fecha: "", hora: "", mensaje: "" });
       setSelectedDay(null);
       setSelectedHora(null);
+      
     } catch (error) {
       console.error("Error:", error);
       alert("Error al agendar. Intenta de nuevo.");
@@ -174,7 +194,7 @@ function Contact() {
 
       <div className="contact-container">
         <div className="left-side">
-          <div className="calendar">
+          <div className={`calendar ${!form.servicio ? 'calendar-blocked' : ''}`}>
             <h4>Selecciona un día</h4>
             <div className="calendar-header">
               <button onClick={prevMonth} aria-label="Mes anterior">‹</button>
@@ -218,7 +238,7 @@ function Contact() {
 
           {selectedDay && (
             <div className="horarios">
-              <h4>Selecciona horario</h4>
+              <h4>Selecciona un horario</h4>
               <div className="horarios-grid">
                 {HORARIOS.map(hora => {
                   const ocupado = isHorarioOcupado(form.fecha, hora);
@@ -258,17 +278,38 @@ function Contact() {
           <div className="form-grid">
             <div className="form-group">
               <label>Nombre *</label>
-              <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Tu nombre completo" required />
-            </div>
+              <input
+                name="nombre"
+                value={form.nombre}
+                onChange={handleChange}
+                placeholder="Tu nombre completo"
+                required
+                className={form.nombre ? 'field-filled' : ''}
+              />            </div>
             <div className="form-group">
               <label>Teléfono *</label>
-              <input name="telefono" value={form.telefono} onChange={handleChange} placeholder="10 dígitos" inputMode="numeric" required />
+              <input
+                name="telefono"
+                value={form.telefono}
+                onChange={handleChange}
+                placeholder="10 dígitos"
+                inputMode="numeric"
+                required
+                className={form.telefono ? 'field-filled' : ''}
+              />            
             </div>
           </div>
 
           <div className="form-group">
             <label>Email (opcional)</label>
-            <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="tu@email.com" />
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="tu@email.com"
+              className={form.email ? 'field-filled' : ''}
+            />
           </div>
 
           {/* 🆕 SERVICIO - Se llena automáticamente desde Services */}
@@ -277,22 +318,37 @@ function Contact() {
             <input 
               value={form.servicio || "Selecciona un servicio de la sección Servicios"} 
               readOnly 
+              className={form.servicio ? 'field-filled' : ''}
             />
           </div>
 
           <div className="form-group">
             <label>Fecha seleccionada</label>
-            <input value={form.fecha || "Selecciona un día en el calendario"} readOnly />
+            <input 
+              value={form.fecha || "Selecciona un día en el calendario"} 
+              readOnly 
+              className={form.fecha ? 'field-filled' : ''}
+            />
           </div>
 
           <div className="form-group">
             <label>Hora seleccionada</label>
-            <input value={form.hora || "Selecciona un horario"} readOnly />
+            <input 
+              value={form.hora || "Selecciona un horario"} 
+              readOnly 
+              className={form.hora ? 'field-filled' : ''}
+            />
           </div>
 
           <div className="form-group">
             <label>Mensaje (opcional)</label>
-            <textarea name="mensaje" value={form.mensaje} onChange={handleChange} placeholder="¿Alguna indicación especial?" />
+            <textarea
+              name="mensaje"
+              value={form.mensaje}
+              onChange={handleChange}
+              placeholder="¿Alguna indicación especial?"
+              className={form.mensaje ? 'field-filled' : ''}
+            />          
           </div>
 
           <button type="submit" className="btn-primary">✂️ Confirmar Cita</button>

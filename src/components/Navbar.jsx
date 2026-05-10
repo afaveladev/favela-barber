@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { FaRegCalendarAlt, FaTimes, FaChevronRight } from "react-icons/fa";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { FaRegCalendarAlt, FaTimes, FaChevronRight, FaWhatsapp } from "react-icons/fa";
 import logo from "../assets/logo.webp";
 
 function Navbar() {
@@ -10,59 +10,65 @@ function Navbar() {
 
   const clickTimer = useRef(null);
   const clickCount = useRef(0);
+  const lastScrollY = useRef(0);
 
+  // Detectar scroll
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 50);
       if (menuOpen) setMenuOpen(false);
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [menuOpen]);
 
+  // Scroll Spy optimizado
   useEffect(() => {
     const sections = ["inicio", "servicios", "nosotros", "opiniones", "galeria", "contacto"];
     const handleScrollSpy = () => {
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 120;
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          const rect = element.getBoundingClientRect();
+          const top = rect.top + window.scrollY;
+          const bottom = top + rect.height;
+          if (scrollPosition >= top && scrollPosition < bottom) {
             setActiveSection(section);
             break;
           }
         }
       }
     };
-    window.addEventListener("scroll", handleScrollSpy);
+    window.addEventListener("scroll", handleScrollSpy, { passive: true });
     return () => window.removeEventListener("scroll", handleScrollSpy);
   }, []);
 
-  const scrollToSection = (id) => {
+  // Scroll suave con offset
+  const scrollToSection = useCallback((id) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      const offset = 80;
+      const top = section.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
       setMenuOpen(false);
     }
-  };
+  }, []);
 
+  // Triple clic en logo → Panel Admin
   const handleLogoClick = () => {
     clickCount.current += 1;
-
     if (clickCount.current === 1) {
-      clickTimer.current = setTimeout(() => {
-        clickCount.current = 0;
-      }, 2000);
+      clickTimer.current = setTimeout(() => { clickCount.current = 0; }, 2000);
     }
-
     if (clickCount.current === 3) {
       clearTimeout(clickTimer.current);
       clickCount.current = 0;
       window.location.href = '/favela-barber/admin';
       return;
     }
-
     scrollToSection("inicio");
   };
 
@@ -75,27 +81,31 @@ function Navbar() {
     { id: "contacto", label: "CONTACTO" }
   ];
 
+  // Bloquear scroll cuando menú abierto
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
+
+  // Cerrar menú con tecla ESC
+  useEffect(() => {
+    const handleEsc = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <>
       <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""} ${menuOpen ? "menu-open" : ""}`}>
         <div className="navbar-container">
           
-          <div className="logo-wrapper" onClick={handleLogoClick}>
+          {/* LOGO */}
+          <div className="logo-wrapper" onClick={handleLogoClick} title="Favela Barber - Inicio">
             <img src={logo} alt="Favela Barber" className="logo-img" />
             <div className="logo-glow"></div>
           </div>
 
+          {/* MENÚ DESKTOP */}
           <div className="nav-links-desktop">
             {navItems.map((item) => (
               <span
@@ -111,30 +121,34 @@ function Navbar() {
             ))}
           </div>
 
+          {/* BOTÓN AGENDAR */}
           <button className="nav-btn-desktop" onClick={() => scrollToSection("contacto")}>
             <FaRegCalendarAlt className="btn-icon" />
             <span>Agendar Cita</span>
             <span className="btn-shine"></span>
           </button>
 
+          {/* HAMBURGUESA */}
           <button 
             className={`menu-toggle ${menuOpen ? "open" : ""}`}
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menú"
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
           >
             <span className="menu-icon-bar"></span>
             <span className="menu-icon-bar"></span>
             <span className="menu-icon-bar"></span>
           </button>
-
         </div>
 
+        {/* OVERLAY */}
         <div className={`mobile-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)}></div>
 
-        <div className={`mobile-menu ${menuOpen ? "active" : ""}`}>
+        {/* MENÚ MÓVIL */}
+        <div className={`mobile-menu ${menuOpen ? "active" : ""}`} aria-hidden={!menuOpen}>
           <div className="mobile-menu-header">
             <img src={logo} alt="Favela Barber" className="mobile-logo" />
-            <button className="mobile-menu-close" onClick={() => setMenuOpen(false)}>
+            <button className="mobile-menu-close" onClick={() => setMenuOpen(false)} aria-label="Cerrar menú">
               <FaTimes />
             </button>
           </div>
@@ -142,7 +156,7 @@ function Navbar() {
           <div className="mobile-menu-content">
             <div className="mobile-nav-links">
               {navItems.map((item, index) => (
-                <div key={item.id} className="mobile-nav-item-wrapper" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div key={item.id} className="mobile-nav-item-wrapper" style={{ animationDelay: `${index * 0.08}s` }}>
                   <span
                     className={`mobile-nav-item ${activeSection === item.id ? "active" : ""}`}
                     onClick={() => scrollToSection(item.id)}
@@ -160,13 +174,13 @@ function Navbar() {
                 <FaRegCalendarAlt /><span>Agendar Cita</span>
               </button>
               <div className="mobile-contact-info">
-                <p className="mobile-phone">📞 871 450 6477</p>
-                <p className="mobile-hours">🕐 11:00 AM - 9:00 PM</p>
+                <p className="mobile-phone">📞 871 535 3066</p>
+                <p className="mobile-hours">🕐 Desde las 11:00 a.m.</p>
               </div>
               <div className="mobile-social-links">
-                <a href="#" className="mobile-social-link">IG</a>
-                <a href="#" className="mobile-social-link">FB</a>
-                <a href="#" className="mobile-social-link">WA</a>
+                <a href="https://wa.me/528715353066" target="_blank" rel="noopener noreferrer" className="mobile-social-link" aria-label="WhatsApp">WA</a>
+                <a href="https://instagram.com/favelabarber" target="_blank" rel="noopener noreferrer" className="mobile-social-link" aria-label="Instagram">IG</a>
+                <a href="https://facebook.com/favelabarber" target="_blank" rel="noopener noreferrer" className="mobile-social-link" aria-label="Facebook">FB</a>
               </div>
             </div>
           </div>
